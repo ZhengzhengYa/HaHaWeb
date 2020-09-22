@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="web-web" />
+        <module name="web-model" />
+        <module name="web-service" />
+        <module name="web-common" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="web-controller" target="1.8" />
+      <module name="zzWeb-model" target="1.8" />
+      <module name="zzWebcontroller" target="1.8" />
+      <module name="zzWebdao" target="1.8" />
+      <module name="zzWebservice" target="1.8" />
+      <module name="zzWebutil" target="1.8" />
+      <module name="zzWebweb" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="web-common" options="-parameters" />
+      <module name="web-controller" options="-parameters" />
+      <module name="web-model" options="-parameters" />
+      <module name="web-service" options="-parameters" />
+      <module name="web-web" options="-parameters" />
+      <module name="zzWeb-model" options="-parameters" />
+      <module name="zzWebcontroller" options="-parameters" />
+      <module name="zzWebdao" options="-parameters" />
+      <module name="zzWebservice" options="-parameters" />
+      <module name="zzWebutil" options="-parameters" />
+      <module name="zzWebweb" options="-parameters" />
+    </option>
+  </component>
+</project>
