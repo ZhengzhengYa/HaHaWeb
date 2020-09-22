@@ -89,7 +89,7 @@
     select 
     <include refid="Base_Column_List" />
     from school
-    where id = #{id,jdbcType=INTEGER};
+    where id = #{id,jdbcType=INTEGER} ;
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from school
