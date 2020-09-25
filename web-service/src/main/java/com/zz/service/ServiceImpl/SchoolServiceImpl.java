@@ -27,4 +27,19 @@ public class SchoolServiceImpl implements SchoolService {
     public long countByExample(SchoolExample example) {
         return schoolMapper.countByExample(example);
     }
+
+    @Override
+    public int insert(School record) {
+        return schoolMapper.insert(record);
+    }
+
+    @Override
+    public int deleteByPrimaryKey(Integer id) {
+        return schoolMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int updateByExampleSelective(School record, SchoolExample example) {
+        return schoolMapper.updateByExampleSelective(record,example);
+    }
 }
