@@ -30,7 +30,7 @@ public class SchoolController {
     @RequestMapping("/getListSchool")
     public HashMap<String, Object> ListUser(@RequestParam int page,@RequestParam int limit){
         SchoolExample example = new SchoolExample();
-        example.setOrderByClause("id ASC");
+        example.setOrderByClause("score DESC");
         PageHelper.startPage(page, limit);
         List<School> schools = schoolService.find(example);
         long count = schoolService.countByExample(example);
@@ -73,7 +73,6 @@ public class SchoolController {
     @ResponseBody
     @RequestMapping("/deleteSchool.do")
     public HashMap<String, Object> insert(@RequestParam int id){
-        System.out.println(id);
         HashMap<String, Object> map = new HashMap<>();
         if (id > 0) {
             schoolService.deleteByPrimaryKey(id);
@@ -122,15 +121,12 @@ public class SchoolController {
     @ResponseBody
     @RequestMapping("/searchSchool.do")
     public HashMap<String, Object> search(@RequestParam String value,@RequestParam int page,@RequestParam int limit){
-        System.out.println(value);
-        System.out.println(page);
-        System.out.println(limit);
         HashMap<String, Object> map = new HashMap<>();
         if (value != null || value !="") {
             PageHelper.startPage(page, limit);
             SchoolExample example = new SchoolExample();
             example.createCriteria().andNameLike("%"+value+"%");
-            example.setOrderByClause("id ASC");
+            example.setOrderByClause("score DESC");
             List<School> schools = schoolService.find(example);
             long count = schoolService.countByExample(example);
             map.put("count",count);

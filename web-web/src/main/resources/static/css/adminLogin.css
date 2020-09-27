@@ -160,3 +160,10 @@ img{
     display: none;
     opacity: 0.75;
 }
+.insertPage{
+    width: 100%;
+    height: 100%;
+    /*background-color: #cccccc;*/
+    display: none;
+    opacity: 0.75;
+}
