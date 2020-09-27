@@ -118,4 +118,30 @@ public class SchoolController {
         }
         return map;
     }
+
+    @ResponseBody
+    @RequestMapping("/searchSchool.do")
+    public HashMap<String, Object> search(@RequestParam String value,@RequestParam int page,@RequestParam int limit){
+        System.out.println(value);
+        System.out.println(page);
+        System.out.println(limit);
+        HashMap<String, Object> map = new HashMap<>();
+        if (value != null || value !="") {
+            PageHelper.startPage(page, limit);
+            SchoolExample example = new SchoolExample();
+            example.createCriteria().andNameLike("%"+value+"%");
+            example.setOrderByClause("id ASC");
+            List<School> schools = schoolService.find(example);
+            long count = schoolService.countByExample(example);
+            map.put("count",count);
+            map.put("data",schools);
+            map.put("msg","查找成功!");
+            map.put("code",0);
+        }
+        else {
+            map.put("msg","数据异常，删除失败!");
+            map.put("code",0);
+        }
+        return map;
+    }
 }

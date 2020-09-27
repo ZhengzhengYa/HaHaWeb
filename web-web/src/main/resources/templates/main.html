@@ -121,15 +121,16 @@
 <script src="../layui/layui.all.js"></script>
 
 <script type="text/html" id="toolbarDemo">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
-        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-        <button class="layui-btn layui-btn-sm" lay-event="insert">新增</button>
-            <div class="layui-inline">
-                <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="搜索内容">
-            </div>
-            <button class="layui-btn layui-btn-sm" data-type="reload">搜索</button>
-<!--            <button class="layui-btn layui-btn-sm" id="shuaxin">刷新</button>-->
+<!--            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button> -->
+    <!--        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>-->
+    <!--        <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+
+    <div class="layui-inline">
+        <input class="layui-input" name="id" id="demoReload" autocomplete="off" placeholder="请输入校名">
+    </div>
+    <button class="layui-btn layui-btn-sm" lay-event="search" id="search">搜索</button>
+    <button class="layui-btn layui-btn-sm" lay-event="insert">新增</button>
+    <!--   <button class="layui-btn layui-btn-sm" id="shuaxin">刷新</button>-->
 </script>
 
 <script type="text/html" id="barDemo">
@@ -138,75 +139,75 @@
 </script>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $.ajax({
-            type:'post',
-            url:'/getName',
-            success:function (data) {
+            type: 'post',
+            url: '/getName',
+            success: function (data) {
                 $("#a").append(data);
             },
-            error:function () {
+            error: function () {
                 layer.alert("请求超时")
             }
         });
     })
 
     //JavaScript代码区域
-    layui.use('element', function() {
+    layui.use('element', function () {
         var element = layui.element;
 
     });
 
-    layui.use('table', function(){
+    layui.use('table', function () {
         var table = layui.table;
         //第一个实例
         table.render({
             elem: '#demo'
-            ,id: 'demo'
-            ,height: 580
-            ,minWidth:100
-            ,url: '/getListSchool' //数据接口
-            ,page: true//开启分页
-            ,limit: 20
-            ,limits: [20,50,100]
-            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+            , id: 'demo'
+            , height: 580
+            , minWidth: 100
+            , url: '/getListSchool' //数据接口
+            , page: true//开启分页
+            , limit: 20
+            , limits: [20, 50, 100]
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                 title: '提示'
-                ,layEvent: 'LAYTABLE_TIPS'
-                ,icon: 'layui-icon-tips'
+                , layEvent: 'LAYTABLE_TIPS'
+                , icon: 'layui-icon-tips'
             }]
-            ,cols: [
+            , cols: [
                 [ //表头
                     {type: 'checkbox', fixed: 'left'},
                     // {title: '序号',align : 'center',width:'5%',type:'numbers'},
-                {field: 'id', hide:true}
-                ,{field: 'seq', title: '排名', width:100}
-                ,{field: 'score', title: '成绩', width:100, sort: true}
-                ,{field: 'name', title: '校名', width:177}
-                ,{field: 'level', title: '星级', width: 80}
-                ,{field: 'remark', title: '名声', width: 177}
-                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
-                // ,{field: 'score', title: '评分', width: 80, sort: true}
-                // ,{field: 'classify', title: '职业', width: 80}
-                // ,{field: 'wealth', title: '财富', width: 135, sort: true}
-            ]
+                    {field: 'id', hide: true}
+                    , {field: 'seq', title: '排名', width: 100}
+                    , {field: 'score', title: '成绩', width: 100, sort: true}
+                    , {field: 'name', title: '校名', width: 177}
+                    , {field: 'level', title: '星级', width: 80}
+                    , {field: 'remark', title: '名声', width: 177}
+                    , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+                    // ,{field: 'score', title: '评分', width: 80, sort: true}
+                    // ,{field: 'classify', title: '职业', width: 80}
+                    // ,{field: 'wealth', title: '财富', width: 135, sort: true}
+                ]
             ]
         });
 
         //头工具栏事件
-        table.on('toolbar(test)', function(obj){
+        table.on('toolbar(test)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
+            switch (obj.event) {
                 case 'getCheckData':
                     var data = checkStatus.data;
                     layer.alert(JSON.stringify(data));
                     break;
                 case 'getCheckLength':
                     var data = checkStatus.data;
-                    layer.msg('选中了：'+ data.length + ' 个');
+                    layer.msg('选中了：' + data.length + ' 个');
                     break;
                 case 'isAll':
-                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    layer.msg(checkStatus.isAll ? '全选' : '未全选');
                     break;
 
                 //自定义头工具栏右侧图标 - 提示
@@ -215,13 +216,13 @@
                     break;
                 case 'insert':
                     layer.open({
-                        type:'1',
-                        content:$('.insertPage'),
-                        title:'新增',
-                        area:['550px','500px'],
-                        btn:['新增','重置','取消'],
-                        closeBtn:'1',
-                        btn1:function (index,layero) {
+                        type: '1',
+                        content: $('.insertPage'),
+                        title: '新增',
+                        area: ['550px', '500px'],
+                        btn: ['新增', '重置', '取消'],
+                        closeBtn: '1',
+                        btn1: function (index, layero) {
                             //注册回调
                             layer.close(index);
                             var seq = $('#seq').val();
@@ -230,23 +231,23 @@
                             var level = $('#level').val();
                             // var selectValue = $('#roleSelect option:selected').val();
                             var remark = $('#remark').val();
-                            if ($.trim(seq) == '' || $.trim(seq).length<=0){
+                            if ($.trim(seq) == '' || $.trim(seq).length <= 0) {
                                 layer.alert("排名不能为空！")
                                 layer.reload();
                             }
-                            if ($.trim(score) == '' || $.trim(score).length<=0){
+                            if ($.trim(score) == '' || $.trim(score).length <= 0) {
                                 layer.alert("成绩不能为空！")
                                 layer.reload();
                             }
-                            if ($.trim(name) == '' || $.trim(name).length<=0){
+                            if ($.trim(name) == '' || $.trim(name).length <= 0) {
                                 layer.alert("校名不能为空！")
                                 layer.reload();
                             }
-                            if ($.trim(level) == '' || $.trim(level).length<=0){
+                            if ($.trim(level) == '' || $.trim(level).length <= 0) {
                                 layer.alert("密保不能为空！")
                                 layer.reload();
                             }
-                            if ($.trim(remark) == '' || $.trim(remark).length<=0){
+                            if ($.trim(remark) == '' || $.trim(remark).length <= 0) {
                                 layer.alert("密保不能为空！")
                                 layer.reload();
                             }
@@ -259,31 +260,31 @@
                             params.score = score;
                             params.name = name;
                             params.level = level;
-                            params.remark=remark;
+                            params.remark = remark;
                             var registerLoadIndex = layer.load(2);
                             $.ajax({
-                                type:'post',
-                                url:window.location.protocol+'//'+window.location.host+'/insertSchool.do',
-                                dataType:'json',
-                                data:JSON.stringify(params),
-                                contentType:'application/json',
-                                success:function (data) {
-                                    if (data.code=0){
+                                type: 'post',
+                                url: window.location.protocol + '//' + window.location.host + '/insertSchool.do',
+                                dataType: 'json',
+                                data: JSON.stringify(params),
+                                contentType: 'application/json',
+                                success: function (data) {
+                                    if (data.code = 0) {
                                         layer.close(registerLoadIndex);
                                         layer.msg(data.msg);
 
-                                    }else {
+                                    } else {
                                         layer.close(registerLoadIndex);
                                         layer.msg(data.msg);
                                     }
                                 },
-                                error:function () {
+                                error: function () {
                                     layer.alert("请求超时")
                                 }
                             });
                             reloadtable()
                         },
-                        btn2:function (index,layero) {
+                        btn2: function (index, layero) {
                             //重置回调
                             var seq = $('#seq').val();
                             var score = $('#score').val();
@@ -294,32 +295,50 @@
                             // 防止注册页面关闭
                             return false;
                         },
-                        btn3:function (index,layero) {
+                        btn3: function (index, layero) {
                             //取消回调
                         }
                     })
-            };
+                case 'search':
+                    //获取当前页
+                    var Page = $(".layui-laypage-skip .layui-input").val();
+                    //获取当前页条数
+                    var Limit = $(".layui-laypage-limits").find("option:selected").val();
+                    //搜索
+                    $('#search').on('click', function () {
+                        // 搜索条件
+                        var value = $('#demoReload').val()
+                        table.reload("demo",{
+                            url: window.location.protocol + '//' + window.location.host + '/searchSchool.do?value='+value+'&page'+Page+'&limit'+Limit,
+                            method:'POST',
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            },
+                        })
+                    });
+            }
+            ;
         });
 
         //监听行工具事件
-        table.on('tool(test)', function(obj){
-            data= obj.data;
-            if(obj.event === 'del'){
-                layer.confirm('真的删除行么', function(index){
+        table.on('tool(test)', function (obj) {
+            data = obj.data;
+            if (obj.event === 'del') {
+                layer.confirm('真的删除行么', function (index) {
                     $.ajax({
-                        type:'post',
-                        url:window.location.protocol+'//'+window.location.host+'/deleteSchool.do?id='+data.id,
-                        success:function (data) {
-                            param=data;
-                            if (data.code=0){
+                        type: 'post',
+                        url: window.location.protocol + '//' + window.location.host + '/deleteSchool.do?id=' + data.id,
+                        success: function (data) {
+                            param = data;
+                            if (data.code = 0) {
                                 layer.close(index);
                                 layer.msg(data.msg);
-                            }else {
+                            } else {
                                 layer.close(index);
                                 layer.msg(data.msg);
                             }
                         },
-                        error:function () {
+                        error: function () {
                             layer.alert("请求超时")
                         }
                     })
@@ -327,7 +346,7 @@
                     layer.close(index);
                 });
 
-            } else if(obj.event === 'edit'){
+            } else if (obj.event === 'edit') {
                 $("#id").val(data.id);
                 $("#seq1").val(data.seq);
                 $("#score1").val(data.score);
@@ -348,7 +367,7 @@
             }
         });
 
-       function reloadtable(){
+        function reloadtable() {
             //执行重载
             table.reload('demo', {
                 page: {
@@ -356,18 +375,18 @@
                 }
 
             });
-       }
+        }
 
         // 编辑流程
         function edit() {
             layer.open({
-                type:'1',
-                content:$('.editPage'),
-                title:'注册',
-                area:['550px','500px'],
-                btn:['修改','重置','取消'],
-                closeBtn:'1',
-                btn1:function (index,layero) {
+                type: '1',
+                content: $('.editPage'),
+                title: '注册',
+                area: ['550px', '500px'],
+                btn: ['修改', '重置', '取消'],
+                closeBtn: '1',
+                btn1: function (index, layero) {
                     //注册回调
                     layer.close(index);
                     var id = $('#id').val();
@@ -377,57 +396,57 @@
                     var level = $('#level1').val();
                     // var selectValue = $('#roleSelect option:selected').val();
                     var remark = $('#remark1').val();
-                    if ($.trim(seq) == '' || $.trim(seq).length<=0){
+                    if ($.trim(seq) == '' || $.trim(seq).length <= 0) {
                         layer.alert("排名不能为空！")
                         layer.reload();
                     }
-                    if ($.trim(score) == '' || $.trim(score).length<=0){
+                    if ($.trim(score) == '' || $.trim(score).length <= 0) {
                         layer.alert("成绩不能为空！")
                         layer.reload();
                     }
-                    if ($.trim(name) == '' || $.trim(name).length<=0){
+                    if ($.trim(name) == '' || $.trim(name).length <= 0) {
                         layer.alert("校名不能为空！")
                         layer.reload();
                     }
-                    if ($.trim(level) == '' || $.trim(level).length<=0){
+                    if ($.trim(level) == '' || $.trim(level).length <= 0) {
                         layer.alert("密保不能为空！")
                         layer.reload();
                     }
-                    if ($.trim(remark) == '' || $.trim(remark).length<=0){
+                    if ($.trim(remark) == '' || $.trim(remark).length <= 0) {
                         layer.alert("密保不能为空！")
                         layer.reload();
                     }
                     var params = {};
-                    params.id=id;
+                    params.id = id;
                     params.seq = seq;
                     params.score = score;
                     params.name = name;
                     params.level = level;
-                    params.remark=remark;
+                    params.remark = remark;
                     var registerLoadIndex = layer.load(2);
                     $.ajax({
-                        type:'post',
-                        url:window.location.protocol+'//'+window.location.host+'/editSchool.do',
-                        dataType:'json',
-                        data:JSON.stringify(params),
-                        contentType:'application/json',
-                        success:function (data) {
-                            if (data.code=0){
+                        type: 'post',
+                        url: window.location.protocol + '//' + window.location.host + '/editSchool.do',
+                        dataType: 'json',
+                        data: JSON.stringify(params),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            if (data.code = 0) {
                                 layer.close(registerLoadIndex);
                                 layer.msg(data.msg);
 
-                            }else {
+                            } else {
                                 layer.close(registerLoadIndex);
                                 layer.msg(data.msg);
                             }
                         },
-                        error:function () {
+                        error: function () {
                             layer.alert("请求超时")
                         }
                     });
                     reloadtable();
                 },
-                btn2:function (index,layero) {
+                btn2: function (index, layero) {
                     //重置回调
                     var seq = $('#seq1').val();
                     var score = $('#score1').val();
@@ -438,7 +457,7 @@
                     // 防止注册页面关闭
                     return false;
                 },
-                btn3:function (index,layero) {
+                btn3: function (index, layero) {
                     //取消回调
                 }
             })
@@ -448,12 +467,7 @@
     });
 
 
-
-
-
-
 </script>
-
 
 
 <div class="insertPage">
@@ -465,7 +479,7 @@
                 </div>
                 <div class="usernameDiv">
                     <i class="layui-icon layui-icon-edit adminIcon"></i>
-                    <input id="seq" class="layui-input adminInput" type="text" name="username" placeholder="请输入..." >
+                    <input id="seq" class="layui-input adminInput" type="text" name="username" placeholder="请输入...">
                 </div>
             </div>
             <div class="usernameWrapDiv">
@@ -491,8 +505,8 @@
                     <label>星级:</label>
                 </div>
                 <div class="passwordDiv">
-                     <i class="layui-icon layui-icon-edit adminIcon"></i>
-                    <input id="level" class="layui-input adminInput"  name="password" placeholder="请输入...">
+                    <i class="layui-icon layui-icon-edit adminIcon"></i>
+                    <input id="level" class="layui-input adminInput" name="password" placeholder="请输入...">
                 </div>
             </div>
             <div class="usernameWrapDiv">
@@ -501,7 +515,7 @@
                 </div>
                 <div class="passwordDiv">
                     <i class="layui-icon layui-icon-edit adminIcon"></i>
-                    <input id="remark" class="layui-input adminInput"  name="password" placeholder="请输入...">
+                    <input id="remark" class="layui-input adminInput" name="password" placeholder="请输入...">
                 </div>
             </div>
         </form>
@@ -511,14 +525,14 @@
 <div class="editPage">
     <div class="registerDiv">
         <form>
-            <input id="id" type="hidden" >
+            <input id="id" type="hidden">
             <div class="usernameWrapDiv">
                 <div class="usernameLabel">
                     <label>排名:</label>
                 </div>
                 <div class="usernameDiv">
                     <i class="layui-icon layui-icon-edit adminIcon"></i>
-                    <input id="seq1" class="layui-input adminInput" type="text" name="username" placeholder="请输入..." >
+                    <input id="seq1" class="layui-input adminInput" type="text" name="username" placeholder="请输入...">
                 </div>
             </div>
             <div class="usernameWrapDiv">
@@ -545,7 +559,7 @@
                 </div>
                 <div class="passwordDiv">
                     <i class="layui-icon layui-icon-edit adminIcon"></i>
-                    <input id="level1" class="layui-input adminInput"  name="password" placeholder="请输入...">
+                    <input id="level1" class="layui-input adminInput" name="password" placeholder="请输入...">
                 </div>
             </div>
             <div class="usernameWrapDiv">
@@ -554,7 +568,7 @@
                 </div>
                 <div class="passwordDiv">
                     <i class="layui-icon layui-icon-edit adminIcon"></i>
-                    <input id="remark1" class="layui-input adminInput"  name="password" placeholder="请输入...">
+                    <input id="remark1" class="layui-input adminInput" name="password" placeholder="请输入...">
                 </div>
             </div>
         </form>
