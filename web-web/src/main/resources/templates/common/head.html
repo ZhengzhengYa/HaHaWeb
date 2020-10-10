@@ -1,3 +1,5 @@
+<html xmlns:th="http://www.w3.org/1999/html">
+
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">哈哈 系统</div>
@@ -29,8 +31,8 @@
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a id="a" href="javascript:;">
-
+                <a id="a" href="#">
+                    <label th:text="${session.user}"></label>
                 </a>
                 <dl class="layui-nav-child">
                     <dd>
@@ -47,17 +49,17 @@
         </ul>
     </div>
 </div>
-<script>
-    $(document).ready(function () {
-        $.ajax({
-            type: 'post',
-            url: '/getName',
-            success: function (data) {
-                $("#a").append(data);
-            },
-            error: function () {
-                layer.alert("请求超时")
-            }
-        });
-    })
-</script>
+<!--<script>-->
+<!--    $(document).ready(function () {-->
+<!--        $.ajax({-->
+<!--            type: 'post',-->
+<!--            url: '/getName',-->
+<!--            success: function (data) {-->
+<!--                $("#a").append(data);-->
+<!--            },-->
+<!--            error: function () {-->
+<!--                layer.alert("请求超时")-->
+<!--            }-->
+<!--        });-->
+<!--    })-->
+<!--</script>-->

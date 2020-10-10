@@ -48,9 +48,9 @@ public class LoginController {
         String name = data.get("loginUsername");
         String pwd = data.get("loginPassword");
         User user1 = userService.selectName(name);
-//        String realName = user1.getRealName();
+        String realName = user1.getRealName();
 //        System.out.println(realName);
-        request.getSession().setAttribute("user",user1);
+        request.getSession().setAttribute("user",realName);
         request.getSession().setAttribute("loginTime",new Date());
         String s = MD5Utils.md5(pwd);
         User user = userService.selectName(name);

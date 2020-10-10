@@ -22,7 +22,16 @@
 
 </body>
 </html>
+
+<script src="../layui/layui.all.js"></script>
+
 <script type="text/javascript">
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+
     //定义一个变量：videoObject，用来做为视频初始化配置
     var videoObject = {
         container: '.video', //“#”代表容器的ID，“.”或“”代表容器的class
@@ -30,4 +39,18 @@
         video: 'video/code.mp4'//视频地址
     };
     var player = new ckplayer(videoObject);//初始化播放器
+</script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'post',
+            url: '/getName',
+            success: function (data) {
+                $("#a").append(data);
+            },
+            error: function () {
+                layer.alert("请求超时")
+            }
+        });
+    })
 </script>
